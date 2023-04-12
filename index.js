@@ -1,6 +1,7 @@
 const fs = require('fs');
 const http = require('http');
 const url = require('url');
+const slugify = require('slugify');
 const replaceTemplate = require(`${__dirname}/modules/replaceTemplate`);
 
 
@@ -11,6 +12,13 @@ const tempProduct = fs.readFileSync(`${__dirname}/templates/product.html`, 'utf-
 
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const dataObj = JSON.parse(data);
+
+const slugs = dataObj.map(el => slugify(el.productName, {lower: true}));
+console.log(slugs);
+
+console.log(slugify('Fresh Avocados', {lower: true}));
+
+
 //////////
 // SERVER
 const server = http.createServer((req, res) => {
